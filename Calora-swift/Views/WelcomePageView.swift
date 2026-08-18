@@ -28,14 +28,13 @@ struct WelcomePageView: View {
         .padding(70)
         
         VStack{
-            Button(action: {
-                // move page
-            }) {
+            NavigationLink(destination: OnboardingView()) {
                 Text("Register")
                     .frame(width: 200, height: 35)
-                    
-            }.buttonStyle(.borderedProminent).tint(.blue)
-                .padding(5)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.blue)
+            .padding(5)
             
             Button(action: {
                 // move page
@@ -49,5 +48,7 @@ struct WelcomePageView: View {
 }
 
 #Preview {
-    WelcomePageView()
+    NavigationStack{
+        WelcomePageView()
+    }
 }
