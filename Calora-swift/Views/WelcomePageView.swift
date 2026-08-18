@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WelcomePageView: View {
+    
+    @State private var navigateToOnboarding = false
+    
     var body: some View {
         VStack{
             ZStack{
@@ -28,21 +31,18 @@ struct WelcomePageView: View {
         .padding(70)
         
         VStack{
-            NavigationLink(destination: OnboardingView()) {
-                Text("Register")
-                    .frame(width: 200, height: 35)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.blue)
-            .padding(5)
             
             Button(action: {
                 // move page
+                navigateToOnboarding = true
             }) {
                 Text("Login")
                     .frame(width: 200, height: 35)
                     
-            }.buttonStyle(.bordered).tint(.blue)
+            }.buttonStyle(.borderedProminent).tint(.blue)
+                .navigationDestination(isPresented: $navigateToOnboarding) {
+                    OnboardingView()
+                }
         }
     }
 }
