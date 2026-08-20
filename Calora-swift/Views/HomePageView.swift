@@ -13,6 +13,15 @@ struct HomePageView: View {
     @Environment(\.modelContext) private var context
     @Query private var profiles: [UserProfile]
     
+    // model prototype for meal input:
+    @State private var mealDescription: String = ""
+    @State private var calorie: Int? = nil
+    @State private var mealTimeStamp: Date = Date()
+    @State private var protein: Int? = nil
+    @State private var carbs: Int? = nil
+    @State private var fat: Int? = nil
+    @State private var logTitle: String = ""
+    
     
     var body: some View {
         
@@ -20,52 +29,34 @@ struct HomePageView: View {
             
             Text("Hello, \(profiles.first?.name ?? "Unknown")")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 35)
                 
             VStack(spacing: 12){
                 
                     HStack(spacing: 12){
                         
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white)
-                            .frame(maxHeight: 70)
+                        HomePageDailyStatusCard(title: "weight", value: "\(profiles.first?.weight ?? 0) kg")
                       
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white)
-                            .frame(maxHeight: 70)
+                        HomePageDailyStatusCard(title: "goal", value: "\(profiles.first?.selectedGoal ?? "nil")")
 
                     }.padding(.horizontal, 0.1)
                     
                     HStack(spacing: 12){
                         
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white)
-                            .frame(maxHeight: 70)
+                        HomePageDailyStatusCard(title: "calories", value: "\(profiles.first?.height ?? 0) cals")
                         
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white)
-                            .frame(maxHeight: 70)
+                        HomePageDailyStatusCard(title: "burned", value: "\(profiles.first?.height ?? 0) cals")
 
                     }.padding(.horizontal, 0.1)
-                }
-                .padding(20)
-                .background(RoundedRectangle(cornerRadius: 10)
-                    .fill(.gray.opacity(0.2)))
-                    
-            
-            Text("Weight: \(profiles.first?.weight ?? 0)")
-                .font(.title)
-                .bold(true)
                 
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Text("Height: \(profiles.first?.height ?? 0)")
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Text("Gender: \(profiles.first?.selectedGender ?? "Not specified")")
-                .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 0)
+                    .fill(.gray.opacity(0.2)))
             
             Spacer()
             
-        }.padding(.horizontal, 35)
-            .padding(.top)
+        }.padding(.top)
         
         
         
