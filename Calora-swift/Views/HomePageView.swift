@@ -13,6 +13,8 @@ struct HomePageView: View {
     @Environment(\.modelContext) private var context
     @Query private var profiles: [UserProfile]
     
+    @State private var navigateToInsertMeal = false
+    
     // model prototype for meal input:
     @State private var mealDescription: String = ""
     @State private var calorie: Int? = nil
@@ -31,7 +33,7 @@ struct HomePageView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 35)
                 
-            VStack(spacing: 12){
+            VStack(spacing: 12){ // top content main stack
                 
                     HStack(spacing: 12){
                         
@@ -49,12 +51,65 @@ struct HomePageView: View {
 
                     }.padding(.horizontal, 0.1)
                 
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 0)
-                    .fill(.gray.opacity(0.2)))
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 0)
+                .fill(.gray.opacity(0.2)))
             
-            Spacer()
+            List{
+                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                
+                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                
+                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                
+                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+            }
+            .frame(maxHeight: .infinity)
+            
+            
+            ZStack (alignment: .bottomTrailing){
+                
+                TabView {
+                    Tab("Home", systemImage: "house") {
+                        // direct to homepage
+                    }
+                    .badge(2)
+
+
+                    Tab("Meal Log", systemImage: "fork.knife") {
+                        // direct to list of meal logs
+                    }
+
+
+                    Tab("Analytics", systemImage: "chart.bar.xaxis.ascending") {
+                        // direct to analytics page
+                    }
+                    .badge("!")
+                    
+                    Tab("Profile", systemImage: "person.crop.circle.fill") {
+                        // direct to profile editing page
+                    }
+                }
+                
+                Button(action: {
+                    navigateToInsertMeal = true
+                }) {
+                    Text("+").tint(.white)
+                        .font(.largeTitle)
+                        .frame(width: 40, height: 48)
+                }
+                .buttonStyle(.glassProminent)
+                .padding(.bottom, 80)
+                .padding(.trailing, 30)
+                .navigationDestination(isPresented: $navigateToInsertMeal){
+                    InsertMealView()
+                }
+                
+                
+            }
+            
+            
             
         }.padding(.top)
         
