@@ -70,28 +70,6 @@ struct HomePageView: View {
             
             ZStack (alignment: .bottomTrailing){
                 
-                TabView {
-                    Tab("Home", systemImage: "house") {
-                        // direct to homepage
-                    }
-                    .badge(2)
-
-
-                    Tab("Meal Log", systemImage: "fork.knife") {
-                        // direct to list of meal logs
-                    }
-
-
-                    Tab("Analytics", systemImage: "chart.bar.xaxis.ascending") {
-                        // direct to analytics page
-                    }
-                    .badge("!")
-                    
-                    Tab("Profile", systemImage: "person.crop.circle.fill") {
-                        // direct to profile editing page
-                    }
-                }
-                
                 Button(action: {
                     navigateToInsertMeal = true
                 }) {
@@ -105,18 +83,10 @@ struct HomePageView: View {
                 .navigationDestination(isPresented: $navigateToInsertMeal){
                     InsertMealView()
                 }
-                
-                
             }
-            
-            
-            
+         
         }.padding(.top)
-        
-        
-        
-        
-        
+    
         
     }
 }

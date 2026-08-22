@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InsertMealView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Inserting new meal page")
     }
 }
 
