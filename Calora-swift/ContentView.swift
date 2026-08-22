@@ -9,24 +9,33 @@ import SwiftUI
 
 struct ContentView: View {
     
+    enum AppTabs{
+        case home
+        case mealLog
+        case analytics
+        case profile
+    }
+    
+    @State private var selection: AppTabs = .home
+    
     var body: some View {
         
-        TabView {
-            Tab("Home", systemImage: "house") {
+        TabView (selection: $selection) {
+            Tab("Home", systemImage: "house", value: .home) {
                 HomePageView()
             }
 
-            Tab("Meal Log", systemImage: "fork.knife") {
+            Tab("Meal Log", systemImage: "fork.knife", value: .mealLog) {
                 MealLogView()
             }
 
 
-            Tab("Analytics", systemImage: "chart.bar.xaxis.ascending") {
+            Tab("Analytics", systemImage: "chart.bar.xaxis.ascending", value: .analytics) {
                 AnalyticsPageView()
             }
             .badge("!")
             
-            Tab("Profile", systemImage: "person.crop.circle.fill") {
+            Tab("Profile", systemImage: "person.crop.circle.fill", value: .profile) {
                 ProfilePageView()
             }
         }

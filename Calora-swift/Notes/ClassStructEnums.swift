@@ -39,7 +39,7 @@ import Playgrounds
         var type: VehicleType
     }
     
-    var carA = Car(make: "Honda", model: "Civic", type: .car)
+    let carA = Car(make: "Honda", model: "Civic", type: .car)
     var carB = carA
     carB.model = "Accord" // updating the value of carB.model doesn't affect carA model. They are not linked.
     print(carA.model)

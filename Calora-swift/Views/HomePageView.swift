@@ -56,19 +56,17 @@ struct HomePageView: View {
             .background(RoundedRectangle(cornerRadius: 0)
                 .fill(.gray.opacity(0.2)))
             
-            List{
-                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
-                
-                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
-                
-                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
-                
-                MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
-            }
-            .frame(maxHeight: .infinity)
-            
-            
-            ZStack (alignment: .bottomTrailing){
+            ZStack{
+                List{
+                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                    
+                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                    
+                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                    
+                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                }
+                .frame(maxHeight: .infinity)
                 
                 Button(action: {
                     navigateToInsertMeal = true
@@ -78,6 +76,7 @@ struct HomePageView: View {
                         .frame(width: 40, height: 48)
                 }
                 .buttonStyle(.glassProminent)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 .padding(.bottom, 80)
                 .padding(.trailing, 30)
                 .navigationDestination(isPresented: $navigateToInsertMeal){
