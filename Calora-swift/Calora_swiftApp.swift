@@ -16,6 +16,9 @@ struct Calora_swiftApp: App {
                 WelcomePageView()
             }
         }
-        .modelContainer(for: UserProfile.self)
+        .modelContainer(for: [
+            UserProfile.self,
+            Meal.self
+        ])
     }
 }

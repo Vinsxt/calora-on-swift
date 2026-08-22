@@ -16,7 +16,7 @@ struct HomePageDailyStatusCard: View {
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 10)
-                .fill(.white)
+                .fill(.blue)
                 .frame(maxHeight: 70)
             
             VStack{
@@ -24,11 +24,13 @@ struct HomePageDailyStatusCard: View {
                     .font(.headline)
                     .bold(false)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(.white)
                 
                 Text(value)
                     .font(.subheadline)
                     .bold(false)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .foregroundStyle(.white)
             }.padding(.horizontal, 10)
         }
     }

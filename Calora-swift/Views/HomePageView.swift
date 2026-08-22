@@ -27,7 +27,7 @@ struct HomePageView: View {
     
     var body: some View {
         
-        VStack(alignment: .center){
+        VStack{
             
             Text("Hello, \(profiles.first?.name ?? "Unknown")")
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -35,38 +35,39 @@ struct HomePageView: View {
                 
             VStack(spacing: 12){ // top content main stack
                 
-                    HStack(spacing: 12){
+                HStack(spacing: 12){
                         
-                        HomePageDailyStatusCard(title: "weight", value: "\(profiles.first?.weight ?? 0) kg")
-                      
-                        HomePageDailyStatusCard(title: "goal", value: "\(profiles.first?.selectedGoal ?? "nil")")
+                    HomePageDailyStatusCard(title: "weight", value: "\(profiles.first?.weight ?? 0) kg")
+                    HomePageDailyStatusCard(title: "goal", value: "\(profiles.first?.selectedGoal ?? "nil")")
 
-                    }.padding(.horizontal, 0.1)
+                }
                     
-                    HStack(spacing: 12){
-                        
-                        HomePageDailyStatusCard(title: "calories", value: "\(profiles.first?.height ?? 0) cals")
-                        
-                        HomePageDailyStatusCard(title: "burned", value: "\(profiles.first?.height ?? 0) cals")
-
-                    }.padding(.horizontal, 0.1)
-                
+                HStack(spacing: 12){
+                    
+                    HomePageDailyStatusCard(title: "calories", value: "\(profiles.first?.height ?? 0) cals") 
+                    HomePageDailyStatusCard(title: "burned", value: "\(profiles.first?.height ?? 0) cals")
+                }
             }
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 0)
-                .fill(.gray.opacity(0.2)))
+            .padding(.top)
+            .padding(.horizontal)
             
             ZStack{
+                
+                
                 List{
                     MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
                     
-                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                    MealLogCard(category: "Lunch", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                    
+                    MealLogCard(category: "Dinner", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
                     
                     MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
-                    
-                    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+                        
                 }
+                
                 .frame(maxHeight: .infinity)
+                .scrollContentBackground(.visible)
+                .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                 
                 Button(action: {
                     navigateToInsertMeal = true
