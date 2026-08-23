@@ -40,9 +40,9 @@ struct WelcomePageView: View {
                     .frame(width: 200, height: 35)
                     
             }.buttonStyle(.borderedProminent).tint(.blue)
-                .navigationDestination(isPresented: $navigateToOnboarding) {
-                    OnboardingView()
-                }
+        }
+        .navigationDestination(isPresented: $navigateToOnboarding) {
+            OnboardingView()
         }
     }
 }

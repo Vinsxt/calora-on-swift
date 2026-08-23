@@ -13,7 +13,7 @@ struct Calora_swiftApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                ContentView()
+                WelcomePageView()
             }
         }
         .modelContainer(for: [

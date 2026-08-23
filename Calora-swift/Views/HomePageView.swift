@@ -113,9 +113,6 @@ struct HomePageView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                     .padding(.bottom, 1)
                     .padding(.trailing, 30)
-                    .navigationDestination(isPresented: $navigateToInsertMeal){
-                        InsertMealView()
-                    }
                     
                     Button(action: { // temporary clear list content button
                         deleteAllMeals()
@@ -131,14 +128,14 @@ struct HomePageView: View {
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                     .padding(.bottom, 20)
                     .padding(.trailing, 30)
-                    .navigationDestination(isPresented: $navigateToInsertMeal){
-                        InsertMealView()
-                    }
                 }
  
                 }
             
             }.padding(.top)
+            .navigationDestination(isPresented: $navigateToInsertMeal){
+                InsertMealView()
+            }
             
         }
         

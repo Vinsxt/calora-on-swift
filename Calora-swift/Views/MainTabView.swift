@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainTabView: View {
     
     enum AppTabs{
         case home
@@ -43,5 +43,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainTabView()
 }

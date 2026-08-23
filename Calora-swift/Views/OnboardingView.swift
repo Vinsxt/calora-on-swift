@@ -11,7 +11,7 @@ import SwiftData
 struct OnboardingView: View {
     
     @State private var showIncompleteAlert = false
-    @State private var navigateToHome = false
+    @State private var navigateToMain = false
     
     @State private var name: String = ""
     @State private var birthdate: Date = Date()
@@ -83,7 +83,7 @@ struct OnboardingView: View {
                         Goal: \(selectedGoal ?? "Not Selected")
                         """)
                         
-                        navigateToHome = true
+                        navigateToMain = true
                     }
                 
                 }) {
@@ -97,14 +97,14 @@ struct OnboardingView: View {
                 } message: {
                     Text("Please complete all required fields before continuing.")
                 }
-                .navigationDestination(isPresented: $navigateToHome){
-                    HomePageView()
-                }
                 
             }.padding(.horizontal, 35)
             
             Spacer()
 
+        }
+        .navigationDestination(isPresented: $navigateToMain){
+            MainTabView()
         }
              
     }
