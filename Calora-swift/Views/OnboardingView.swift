@@ -58,9 +58,9 @@ struct OnboardingView: View {
                     Text("Current Goal").font(.subheadline)
                     
                     Picker("Select your goal", selection: $selectedGoal) {
-                        Text("Lose fat").tag("lose")
-                        Text("Build muscle").tag("build")
-                        Text("Maintain weight").tag("maintain")
+                        Text("Lose fat").tag("Lose fat")
+                        Text("Build muscle").tag("Build muscle")
+                        Text("Maintain weight").tag("Maintain weight")
                     }
                     .pickerStyle(.navigationLink)
                 }.padding(.bottom, 50)
