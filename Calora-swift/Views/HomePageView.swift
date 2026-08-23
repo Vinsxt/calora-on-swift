@@ -81,7 +81,7 @@ struct HomePageView: View {
                         )
                     
                     ForEach(meals) {meal in MealLogCard(
-                        category: meal.category?.rawValue ?? "Category",
+                        category: meal.category?.displayName ?? "Category",
                         title: meal.logTitle,
                         protein: meal.protein ?? 0,
                         carbs: meal.carbs ?? 0,
