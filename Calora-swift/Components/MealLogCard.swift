@@ -17,34 +17,46 @@ struct MealLogCard: View {
     let fat: Int
     let calories: Int
     
+    let onTap: () -> Void
+    
     var body: some View {
-        VStack{
-            HStack(alignment: .top){
-                VStack(alignment: .leading){
-                    Text("\(category)").bold(true)
-                    Text("\(title)")
+        
+        Button {
+            onTap()
+        } label: {
+            VStack{
+                HStack(alignment: .top){
+                    VStack(alignment: .leading){
+                        Text("\(category)").bold(true)
+                        Text("\(title)")
+                        
+                    }.padding(.leading, 20)
+                        .padding(.top, 10)
                     
-                }.padding(.leading, 20)
-                    .padding(.top, 10)
-                
-                Spacer()
-                
-                VStack(alignment: .trailing){
-                    Text("\(Date().formatted(date: .numeric, time: .shortened))")
-                        .font(.caption)
-                    Text("\(calories) cals")
-                }.padding(.trailing, 20)
-                    .padding(.top, 10)
+                    Spacer()
+                    
+                    VStack(alignment: .trailing){
+                        Text("\(Date().formatted(date: .numeric, time: .shortened))")
+                            .font(.caption)
+                        Text("\(calories) cals")
+                    }.padding(.trailing, 20)
+                        .padding(.top, 10)
+                }
+                Text("protein: \(protein) g | carbs: \(carbs) g | fat: \(fat) g")
+                    .font(.caption)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
             }
-            Text("protein: \(protein) g | carbs: \(carbs) g | fat: \(fat) g")
-                .font(.caption)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 20)
         }
+        .buttonStyle(.plain)
+        
         
     }
 }
 
 #Preview {
     MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+    {
+        print("hello")
+    }
 }

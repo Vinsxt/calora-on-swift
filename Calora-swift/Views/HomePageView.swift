@@ -56,29 +56,35 @@ struct HomePageView: View {
             ZStack{
                 List{
                     MealLogCard(
-                            category: "Breakfast",
-                            title: "Chicken breast 200g",
-                            protein: 40,
-                            carbs: 5,
-                            fat: 5,
-                            calories: 250
-                        )
-                        MealLogCard(
-                            category: "Lunch",
-                            title: "Chicken breast 200g",
-                            protein: 40,
-                            carbs: 5,
-                            fat: 5,
-                            calories: 250
-                        )
-                        MealLogCard(
-                            category: "Dinner",
-                            title: "Chicken breast 200g",
-                            protein: 40,
-                            carbs: 5,
-                            fat: 5,
-                            calories: 250
-                        )
+                        category: "Breakfast",
+                        title: "Chicken breast 200g",
+                        protein: 40,
+                        carbs: 5,
+                        fat: 5,
+                        calories: 250
+                    ) {
+                        print("print meal")
+                    }
+                    MealLogCard(
+                        category: "Lunch",
+                        title: "Chicken breast 200g",
+                        protein: 40,
+                        carbs: 5,
+                        fat: 5,
+                        calories: 250
+                    ) {
+                        print("print meal")
+                    }
+                    MealLogCard(
+                        category: "Dinner",
+                        title: "Chicken breast 200g",
+                        protein: 40,
+                        carbs: 5,
+                        fat: 5,
+                        calories: 250
+                    ) {
+                        print("print meal")
+                    }
                     
                     ForEach(meals) {meal in MealLogCard(
                         category: meal.category?.displayName ?? "Category",
@@ -87,7 +93,9 @@ struct HomePageView: View {
                         carbs: meal.carbs ?? 0,
                         fat: meal.fat ?? 0,
                         calories: meal.calorie ?? 0
-                    )
+                    ) {
+                        print("print meal")
+                    }
                         
                     }
                     
