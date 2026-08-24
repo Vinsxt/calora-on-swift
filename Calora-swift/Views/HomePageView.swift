@@ -15,6 +15,7 @@ struct HomePageView: View {
     @Query private var meals: [Meal]
     
     @State private var navigateToInsertMeal = false
+    @State private var selectedMeal: Meal?
     
     // model prototype for meal input:
     @State private var mealDescription: String = ""
@@ -55,36 +56,6 @@ struct HomePageView: View {
             
             ZStack{
                 List{
-                    MealLogCard(
-                        category: "Breakfast",
-                        title: "Chicken breast 200g",
-                        protein: 40,
-                        carbs: 5,
-                        fat: 5,
-                        calories: 250
-                    ) {
-                        print("print meal")
-                    }
-                    MealLogCard(
-                        category: "Lunch",
-                        title: "Chicken breast 200g",
-                        protein: 40,
-                        carbs: 5,
-                        fat: 5,
-                        calories: 250
-                    ) {
-                        print("print meal")
-                    }
-                    MealLogCard(
-                        category: "Dinner",
-                        title: "Chicken breast 200g",
-                        protein: 40,
-                        carbs: 5,
-                        fat: 5,
-                        calories: 250
-                    ) {
-                        print("print meal")
-                    }
                     
                     ForEach(meals) {meal in MealLogCard(
                         category: meal.category?.displayName ?? "Category",
@@ -94,7 +65,7 @@ struct HomePageView: View {
                         fat: meal.fat ?? 0,
                         calories: meal.calorie ?? 0
                     ) {
-                        print("print meal")
+                        selectedMeal = meal
                     }
                         
                     }
@@ -137,48 +108,51 @@ struct HomePageView: View {
                     .padding(.bottom, 20)
                     .padding(.trailing, 30)
                 }
- 
-                }
+                
+            }
             
-            }.padding(.top)
+        }.padding(.top)
             .navigationDestination(isPresented: $navigateToInsertMeal){
                 InsertMealView()
             }
-            
-        }
+            .navigationDestination(item: $selectedMeal){
+                meal in EditMealView(meal: meal)
+            }
         
-        func saveMeal(mealDescription: String, category: Category? = nil, calorie: Int? = nil, mealTimeStamp: Date, protein: Int? = nil, carbs: Int? = nil, fat: Int? = nil, logTitle: String){
-
-            let meal = Meal(mealDescription: mealDescription, category: category, calorie: calorie, mealTimeStamp: mealTimeStamp, protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
-            
-            context.insert(meal)
-        }
+    }
+    
+    func saveMeal(mealDescription: String, category: Category? = nil, calorie: Int? = nil, mealTimeStamp: Date, protein: Int? = nil, carbs: Int? = nil, fat: Int? = nil, logTitle: String){
         
-        func insertTestMeals(){
-            
-            saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
-            
-            saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
-            
-            saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
-            
-            saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
-            
-            print("inserted meals..?")
-            
-        }
+        let meal = Meal(mealDescription: mealDescription, category: category, calorie: calorie, mealTimeStamp: mealTimeStamp, protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
         
-        func deleteAllMeals(){
-            for meal in meals {
-                context.delete(meal)
-                if (meals.isEmpty){
-                    print("meals are cleared!")
-                }
+        context.insert(meal)
+    }
+    
+    func insertTestMeals(){
+        
+        saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
+        
+        saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
+        
+        saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
+        
+        saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
+        
+        print("inserted meals..?")
+        
+    }
+    
+    func deleteAllMeals(){
+        for meal in meals {
+            context.delete(meal)
+            if (meals.isEmpty){
+                print("meals are cleared!")
             }
         }
     }
-    
-    
+}
+
+
 
 #Preview {
     NavigationStack{
