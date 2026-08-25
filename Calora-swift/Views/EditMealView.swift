@@ -28,7 +28,19 @@ struct EditMealView: View {
     
     @State private var showIncompleteAlert = false
     
-    let meal: Meal
+    let passedMeal: Meal
+    
+    init(passedMeal: Meal){
+        
+        self.passedMeal = passedMeal
+        self._mealDescription = State(initialValue: passedMeal.mealDescription)
+        self._logTitle = State(initialValue: passedMeal.logTitle)
+        self._category = State(initialValue: passedMeal.category)
+        self._calorie = State(initialValue: passedMeal.calorie)
+        self._protein = State(initialValue: passedMeal.protein)
+        self._carbs = State(initialValue: passedMeal.carbs)
+        self._fat = State(initialValue: passedMeal.fat)
+    }
     
     var body: some View {
         
@@ -81,7 +93,7 @@ struct EditMealView: View {
                     showIncompleteAlert = true
                 }
                 else{
-                    saveMeal(mealDescription: mealDescription, category: category, calorie: calorie, mealTimeStamp: Date(), protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
+                    updateMeal(updatingMeal: passedMeal, mealDescription: mealDescription, category: category, calorie: calorie, protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
                     
                     dismiss()
                 }
@@ -112,19 +124,38 @@ struct EditMealView: View {
         
         context.insert(meal)
     }
+    
+    func updateMeal(updatingMeal: Meal, mealDescription: String, category: Category? = nil, calorie: Int? = nil, protein: Int? = nil, carbs: Int? = nil, fat: Int? = nil, logTitle: String){
+        
+        updatingMeal.mealDescription = mealDescription
+        updatingMeal.logTitle = logTitle
+        updatingMeal.category = category
+        updatingMeal.calorie = calorie
+        updatingMeal.protein = protein
+        updatingMeal.carbs = carbs
+        updatingMeal.fat = fat
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed to update meal: \(error)")
+        }
+    }
 }
 
 #Preview {
-    EditMealView(
-        meal: Meal(
-            mealDescription: "Chicken breast 200g",
-            category: .breakfast,
-            calorie: 250,
-            mealTimeStamp: Date(),
-            protein: 40,
-            carbs: 5,
-            fat: 5,
-            logTitle: "Chicken breast"
+    NavigationStack{
+        EditMealView(
+            passedMeal: Meal(
+                mealDescription: "Chicken breast 200g",
+                category: .breakfast,
+                calorie: 250,
+                mealTimeStamp: Date(),
+                protein: 40,
+                carbs: 5,
+                fat: 5,
+                logTitle: "Chicken breast"
+            )
         )
-    )
+    }
 }

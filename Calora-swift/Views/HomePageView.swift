@@ -116,7 +116,7 @@ struct HomePageView: View {
                 InsertMealView()
             }
             .navigationDestination(item: $selectedMeal){
-                meal in EditMealView(meal: meal)
+                meal in EditMealView(passedMeal: meal)
             }
         
     }
