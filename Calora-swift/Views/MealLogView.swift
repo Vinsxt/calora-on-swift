@@ -78,7 +78,7 @@ struct MealLogView: View {
                     Image(systemName: "line.3.horizontal.decrease")
                         .foregroundStyle(.black)
                         .font(.title)
-                        .frame(width: 30, height: 36)
+                        .frame(width: 27, height: 36)
                 }
                 .buttonStyle(.glassProminent)
                 .tint(.white)
@@ -90,7 +90,7 @@ struct MealLogView: View {
                     Image(systemName: "calendar")
                         .foregroundStyle(.black)
                         .font(.title)
-                        .frame(width: 30, height: 36)
+                        .frame(width: 27, height: 36)
                 }
                 .buttonStyle(.glassProminent)
                 .tint(.white)
