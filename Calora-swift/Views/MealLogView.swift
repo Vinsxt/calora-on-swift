@@ -16,12 +16,10 @@ struct MealLogView: View {
     
     var body: some View {
         
-        
-        Text("Meal Log View")
-        
-        
-        List{
-            MealLogCard(
+        ZStack{
+            
+            List{
+                MealLogCard(
                     category: "Breakfast",
                     title: "Chicken breast 200g",
                     protein: 40,
@@ -51,31 +49,65 @@ struct MealLogView: View {
                 ) {
                     print("print meal")
                 }
-            
-            ForEach(meals) {meal in MealLogCard(
-                category: meal.category?.displayName ?? "Category",
-                title: meal.logTitle,
-                protein: meal.protein ?? 0,
-                carbs: meal.carbs ?? 0,
-                fat: meal.fat ?? 0,
-                calories: meal.calorie ?? 0
-            ) {
-                print("print meal")
-            }
+                
+                ForEach(meals) {meal in MealLogCard(
+                    category: meal.category?.displayName ?? "Category",
+                    title: meal.logTitle,
+                    protein: meal.protein ?? 0,
+                    carbs: meal.carbs ?? 0,
+                    fat: meal.fat ?? 0,
+                    calories: meal.calorie ?? 0
+                ) {
+                    print("print meal")
+                }
+                    
+                }
                 
             }
+            .safeAreaPadding(.top, 40)
+            .onAppear(){
+                if meals.isEmpty{
+                    insertTestMeals()
+                }
+            }
+            
+            HStack(){
+                Button(action: {
+                    // code
+                }) {
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .foregroundStyle(.black)
+                        .font(.title)
+                        .frame(width: 30, height: 36)
+                }
+                .buttonStyle(.glassProminent)
+                .tint(.white)
+                .padding(.bottom, 1)
+                
+                Button(action: {
+                    // code
+                }) {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.black)
+                        .font(.title)
+                        .frame(width: 30, height: 36)
+                }
+                .buttonStyle(.glassProminent)
+                .tint(.white)
+                .padding(.bottom, 1)
+                .padding(.trailing, 30)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            
             
         }
-        .onAppear(){
-            if meals.isEmpty{
-                insertTestMeals()
-            }
-        }
+        
+        
         
     }
     
     func saveMeal(mealDescription: String, category: Category? = nil, calorie: Int? = nil, mealTimeStamp: Date, protein: Int? = nil, carbs: Int? = nil, fat: Int? = nil, logTitle: String){
-
+        
         let meal = Meal(mealDescription: mealDescription, category: category, calorie: calorie, mealTimeStamp: mealTimeStamp, protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
         
         context.insert(meal)

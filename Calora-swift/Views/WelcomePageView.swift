@@ -38,7 +38,7 @@ struct WelcomePageView: View {
             }) {
                 Text("Login")
                     .frame(width: 200, height: 35)
-                    
+                
             }.buttonStyle(.borderedProminent).tint(.blue)
         }
         .navigationDestination(isPresented: $navigateToOnboarding) {

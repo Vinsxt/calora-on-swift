@@ -85,7 +85,7 @@ struct OnboardingView: View {
                         
                         navigateToMain = true
                     }
-                
+                    
                 }) {
                     Text("Continue").tint(.white)
                 }
@@ -101,12 +101,12 @@ struct OnboardingView: View {
             }.padding(.horizontal, 35)
             
             Spacer()
-
+            
         }
         .navigationDestination(isPresented: $navigateToMain){
             MainTabView()
         }
-             
+        
     }
     
     func saveProfile(name: String, birthdate: Date, height: Int?, weight: Int?, selectedGender: String?, selectedGoal: String?){

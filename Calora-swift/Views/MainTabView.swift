@@ -24,12 +24,12 @@ struct MainTabView: View {
             Tab("Home", systemImage: "house", value: .home) {
                 HomePageView()
             }
-
+            
             Tab("Meal Log", systemImage: "fork.knife", value: .mealLog) {
                 MealLogView()
             }
-
-
+            
+            
             Tab("Analytics", systemImage: "chart.bar.xaxis.ascending", value: .analytics) {
                 AnalyticsPageView()
             }
