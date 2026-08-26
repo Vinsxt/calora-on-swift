@@ -96,13 +96,25 @@ struct MealLogView: View {
     
     func insertTestMeals(){
         
-        saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
+        let today = Date()
+        let yesterday = Calendar.current.date(
+            byAdding: .day,
+            value: -1,
+            to: today
+        )!
+        let twoDaysAgo = Calendar.current.date(
+            byAdding: .day,
+            value: -2,
+            to: today
+        )!
         
-        saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
+        saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: today, protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
         
-        saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
+        saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: today, protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
         
-        saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
+        saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: yesterday, protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
+        
+        saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: twoDaysAgo, protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
         
         print("inserted meals..?")
         

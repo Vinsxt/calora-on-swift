@@ -27,6 +27,11 @@ struct HomePageView: View {
     @State private var fat: Int? = nil
     @State private var logTitle: String = ""
     
+    var groupedMeals: [Date: [Meal]] {
+        Dictionary(grouping: meals){
+            meal in Calendar.current.startOfDay(for: meal.mealTimeStamp)
+        }
+    }
     
     var body: some View {
         
@@ -56,27 +61,33 @@ struct HomePageView: View {
             
             ZStack{
                 List{
-                    
-                    ForEach(meals) {meal in MealLogCard(
-                        category: meal.category?.displayName ?? "Category",
-                        title: meal.logTitle,
-                        protein: meal.protein ?? 0,
-                        carbs: meal.carbs ?? 0,
-                        fat: meal.fat ?? 0,
-                        calories: meal.calorie ?? 0,
-                        mealTimeStamp: meal.mealTimeStamp
-                    ) {
-                        selectedMeal = meal
-                    }
-                        
+                    ForEach(groupedMeals.keys.sorted(by: >), id: \.self) {date in
+                        Section{
+                            ForEach(groupedMeals[date] ?? []) {meal in MealLogCard(
+                                category: meal.category?.displayName ?? "Category",
+                                title: meal.logTitle,
+                                protein: meal.protein ?? 0,
+                                carbs: meal.carbs ?? 0,
+                                fat: meal.fat ?? 0,
+                                calories: meal.calorie ?? 0,
+                                mealTimeStamp: meal.mealTimeStamp
+                            ) {
+                                print("print meal")
+                            }
+                            }
+                        } header: {
+                            Text(date.formatted(date: .long, time: .omitted))
+                        }
                     }
                     
                 }
+                .safeAreaPadding(.top, 40)
                 .onAppear(){
                     if meals.isEmpty{
                         insertTestMeals()
                     }
                 }
+                
                 .frame(maxHeight: .infinity)
                 .scrollContentBackground(.visible)
                 .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
@@ -131,13 +142,25 @@ struct HomePageView: View {
     
     func insertTestMeals(){
         
-        saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
+        let today = Date()
+        let yesterday = Calendar.current.date(
+            byAdding: .day,
+            value: -1,
+            to: today
+        )!
+        let twoDaysAgo = Calendar.current.date(
+            byAdding: .day,
+            value: -2,
+            to: today
+        )!
         
-        saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: Date(), protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
+        saveMeal(mealDescription: "chicken breast 200g", category: .breakfast, calorie: 250, mealTimeStamp: today, protein: 40, carbs: 5, fat: 5, logTitle: "Chicken breast")
         
-        saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
+        saveMeal(mealDescription: "eggs, green veggies, apples, more 200g chicken breast", category: .lunch, calorie: 250, mealTimeStamp: today, protein: 40, carbs: 50, fat: 5, logTitle: "Fiber + Protein lunch")
         
-        saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: Date(), protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
+        saveMeal(mealDescription: "cooked fish, instant noodle, crackers", category: .dinner, calorie: 250, mealTimeStamp: yesterday, protein: 30, carbs: 60, fat: 30, logTitle: "Cheat Dinner")
+        
+        saveMeal(mealDescription: "2 medium banana, 200 gr", category: .snack, calorie: 250, mealTimeStamp: twoDaysAgo, protein: 30, carbs: 60, fat: 30, logTitle: "Banana pre-workout")
         
         print("inserted meals..?")
         
@@ -161,7 +184,7 @@ struct HomePageView: View {
             for: Meal.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
-
+        
         let today = Date()
         let yesterday = Calendar.current.date(
             byAdding: .day,
@@ -173,7 +196,7 @@ struct HomePageView: View {
             value: -2,
             to: today
         )!
-
+        
         container.mainContext.insert(
             Meal(
                 mealDescription: "Chicken breast 200g",
@@ -186,7 +209,7 @@ struct HomePageView: View {
                 logTitle: "Chicken breast"
             )
         )
-
+        
         container.mainContext.insert(
             Meal(
                 mealDescription: "Eggs and rice",
@@ -199,7 +222,7 @@ struct HomePageView: View {
                 logTitle: "Eggs + Rice"
             )
         )
-
+        
         container.mainContext.insert(
             Meal(
                 mealDescription: "Fish and vegetables",
@@ -212,7 +235,7 @@ struct HomePageView: View {
                 logTitle: "Fish Dinner"
             )
         )
-
+        
         container.mainContext.insert(
             Meal(
                 mealDescription: "Banana and yogurt",
@@ -225,7 +248,7 @@ struct HomePageView: View {
                 logTitle: "Pre-workout Snack"
             )
         )
-
+        
         return HomePageView()
             .modelContainer(container)
     }
