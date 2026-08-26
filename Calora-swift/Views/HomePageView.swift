@@ -72,7 +72,7 @@ struct HomePageView: View {
                                 calories: meal.calorie ?? 0,
                                 mealTimeStamp: meal.mealTimeStamp
                             ) {
-                                print("print meal")
+                                selectedMeal = meal
                             }
                             }
                         } header: {
@@ -81,7 +81,7 @@ struct HomePageView: View {
                     }
                     
                 }
-                .safeAreaPadding(.top, 40)
+                .safeAreaPadding(.top, 10)
                 .onAppear(){
                     if meals.isEmpty{
                         insertTestMeals()
