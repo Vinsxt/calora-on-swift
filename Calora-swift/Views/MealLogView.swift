@@ -14,53 +14,33 @@ struct MealLogView: View {
     @Query private var profiles: [UserProfile]
     @Query private var meals: [Meal]
     
+    var groupedMeals: [Date: [Meal]] {
+        Dictionary(grouping: meals){
+            meal in Calendar.current.startOfDay(for: meal.mealTimeStamp)
+        }
+    }
+    
     var body: some View {
         
         ZStack{
             
             List{
-                MealLogCard(
-                    category: "Breakfast",
-                    title: "Chicken breast 200g",
-                    protein: 40,
-                    carbs: 5,
-                    fat: 5,
-                    calories: 250
-                ) {
-                    print("print meal")
-                }
-                MealLogCard(
-                    category: "Lunch",
-                    title: "Chicken breast 200g",
-                    protein: 40,
-                    carbs: 5,
-                    fat: 5,
-                    calories: 250
-                ) {
-                    print("print meal")
-                }
-                MealLogCard(
-                    category: "Dinner",
-                    title: "Chicken breast 200g",
-                    protein: 40,
-                    carbs: 5,
-                    fat: 5,
-                    calories: 250
-                ) {
-                    print("print meal")
-                }
-                
-                ForEach(meals) {meal in MealLogCard(
-                    category: meal.category?.displayName ?? "Category",
-                    title: meal.logTitle,
-                    protein: meal.protein ?? 0,
-                    carbs: meal.carbs ?? 0,
-                    fat: meal.fat ?? 0,
-                    calories: meal.calorie ?? 0
-                ) {
-                    print("print meal")
-                }
-                    
+                ForEach(groupedMeals.keys.sorted(by: >), id: \.self) {date in
+                    Section{
+                        ForEach(meals) {meal in MealLogCard(
+                            category: meal.category?.displayName ?? "Category",
+                            title: meal.logTitle,
+                            protein: meal.protein ?? 0,
+                            carbs: meal.carbs ?? 0,
+                            fat: meal.fat ?? 0,
+                            calories: meal.calorie ?? 0
+                        ) {
+                            print("print meal")
+                        }
+                        }
+                    } header: {
+                        Text(date.formatted(date: .long, time: .omitted))
+                    }
                 }
                 
             }
