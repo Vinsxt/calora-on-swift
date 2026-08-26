@@ -27,13 +27,14 @@ struct MealLogView: View {
             List{
                 ForEach(groupedMeals.keys.sorted(by: >), id: \.self) {date in
                     Section{
-                        ForEach(meals) {meal in MealLogCard(
+                        ForEach(groupedMeals[date] ?? []) {meal in MealLogCard(
                             category: meal.category?.displayName ?? "Category",
                             title: meal.logTitle,
                             protein: meal.protein ?? 0,
                             carbs: meal.carbs ?? 0,
                             fat: meal.fat ?? 0,
-                            calories: meal.calorie ?? 0
+                            calories: meal.calorie ?? 0,
+                            mealTimeStamp: meal.mealTimeStamp
                         ) {
                             print("print meal")
                         }
@@ -109,5 +110,75 @@ struct MealLogView: View {
 }
 
 #Preview {
-    MealLogView()
+    let container = try! ModelContainer(
+        for: Meal.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+    )
+
+    let today = Date()
+    let yesterday = Calendar.current.date(
+        byAdding: .day,
+        value: -1,
+        to: today
+    )!
+    let twoDaysAgo = Calendar.current.date(
+        byAdding: .day,
+        value: -2,
+        to: today
+    )!
+
+    container.mainContext.insert(
+        Meal(
+            mealDescription: "Chicken breast 200g",
+            category: .breakfast,
+            calorie: 250,
+            mealTimeStamp: today,
+            protein: 40,
+            carbs: 5,
+            fat: 5,
+            logTitle: "Chicken breast"
+        )
+    )
+
+    container.mainContext.insert(
+        Meal(
+            mealDescription: "Eggs and rice",
+            category: .lunch,
+            calorie: 500,
+            mealTimeStamp: today,
+            protein: 30,
+            carbs: 60,
+            fat: 15,
+            logTitle: "Eggs + Rice"
+        )
+    )
+
+    container.mainContext.insert(
+        Meal(
+            mealDescription: "Fish and vegetables",
+            category: .dinner,
+            calorie: 400,
+            mealTimeStamp: yesterday,
+            protein: 45,
+            carbs: 20,
+            fat: 10,
+            logTitle: "Fish Dinner"
+        )
+    )
+
+    container.mainContext.insert(
+        Meal(
+            mealDescription: "Banana and yogurt",
+            category: .snack,
+            calorie: 250,
+            mealTimeStamp: twoDaysAgo,
+            protein: 10,
+            carbs: 40,
+            fat: 5,
+            logTitle: "Pre-workout Snack"
+        )
+    )
+
+    return MealLogView()
+        .modelContainer(container)
 }

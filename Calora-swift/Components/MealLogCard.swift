@@ -16,6 +16,7 @@ struct MealLogCard: View {
     let carbs: Int
     let fat: Int
     let calories: Int
+    let mealTimeStamp: Date
     
     let onTap: () -> Void
     
@@ -31,12 +32,11 @@ struct MealLogCard: View {
                         Text("\(title)")
                         
                     }.padding(.leading, 20)
-                        .padding(.top, 10)
                     
                     Spacer()
                     
                     VStack(alignment: .trailing){
-                        Text("\(Date().formatted(date: .numeric, time: .shortened))")
+                        Text("\(mealTimeStamp.formatted(date: .numeric, time: .shortened))")
                             .font(.caption)
                         Text("\(calories) cals")
                     }.padding(.trailing, 20)
@@ -55,7 +55,7 @@ struct MealLogCard: View {
 }
 
 #Preview {
-    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250)
+    MealLogCard(category: "Breakfast", title: "Chicken breast 200g", protein: 40, carbs: 5, fat: 5, calories: 250, mealTimeStamp: Date())
     {
         print("hello")
     }
