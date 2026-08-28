@@ -9,7 +9,17 @@ import SwiftUI
 
 struct AnalyticsPageView: View {
     var body: some View {
-        Text("Analytics Page")
+        
+        VStack {
+            LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                AnalyticsNumbersCard()
+                
+                AnalyticsNumbersCard()
+            }
+            .padding(.horizontal)
+        }
+        
+        
     }
 }
 
