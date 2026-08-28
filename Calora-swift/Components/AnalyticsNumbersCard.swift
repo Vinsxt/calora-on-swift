@@ -10,29 +10,33 @@ import SwiftUI
 
 struct AnalyticsNumbersCard: View {
     
+    let title: String
+    let iconDisplay: String
+    let iconColor: Color
+    let value: Int
+    
+    
     var body: some View {
         ZStack{
             
             Color(uiColor: .systemGray6)
-                .cornerRadius(15)
+                .cornerRadius(12)
             
             VStack (spacing: 20){
                 HStack (alignment: .top){
                     
                     VStack(alignment: .leading, spacing: 5){
-                        Text("Steps")
+                        Text("\(title)")
                             .font(.system(size: 16))
-                        Text("Goal: 10,000")
-                            .font(.system(size: 12))
-                            .foregroundStyle(.gray)
                     }
                     
                     Spacer()
-                    Image(systemName: "figure.walk")
-                        .foregroundStyle(.green)
+            
+                    Image(systemName: "\(iconDisplay)")
+                        .foregroundStyle(iconColor)
                 }
                 
-                Text("10,000")
+                Text("\(value)")
                     .font(.system(size: 24))
             }
             .padding()
@@ -42,5 +46,5 @@ struct AnalyticsNumbersCard: View {
 }
 
 #Preview {
-    AnalyticsNumbersCard()
+    AnalyticsNumbersCard(title: "Calories", iconDisplay: "fork.knife.circle", iconColor: .green, value: 3000)
 }

@@ -33,6 +33,12 @@ struct HomePageView: View {
         }
     }
     
+    var todayMeals: [Meal]{
+        meals.filter { meal in
+            Calendar.current.isDateInToday(meal.mealTimeStamp)
+        }
+    }
+    
     var body: some View {
         
         VStack {
@@ -173,6 +179,10 @@ struct HomePageView: View {
                 print("meals are cleared!")
             }
         }
+    }
+    
+    func calculateTodayIntake(todayMeals: [Meal]){
+        
     }
 }
 

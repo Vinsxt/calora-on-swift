@@ -12,11 +12,11 @@ struct AnalyticsPageView: View {
         
         VStack {
             LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
-                AnalyticsNumbersCard()
+                AnalyticsNumbersCard(title: "Calories", iconDisplay: "fork.knife.circle", iconColor: .green, value: 3000)
                 
-                AnalyticsNumbersCard()
+                AnalyticsNumbersCard(title: "Calories", iconDisplay: "fork.knife.circle", iconColor: .green, value: 3000)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 45)
         }
         
         
