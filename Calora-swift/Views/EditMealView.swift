@@ -95,6 +95,8 @@ struct EditMealView: View {
                 else{
                     updateMeal(updatingMeal: passedMeal, mealDescription: mealDescription, category: category, calorie: calorie, protein: protein, carbs: carbs, fat: fat, logTitle: logTitle)
                     
+                    print("🔥 About to dismiss EditMealView")
+                    
                     dismiss()
                 }
                 

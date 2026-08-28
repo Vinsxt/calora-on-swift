@@ -58,7 +58,7 @@ struct HomePageView: View {
                 
                 HStack(spacing: 12){
                     
-                    HomePageDailyStatusCard(title: "calories", value: "\(profiles.first?.height ?? 0) cals")
+                    HomePageDailyStatusCard(title: "calories", value: "\(calculateTodayIntake()) cals")
                     HomePageDailyStatusCard(title: "burned", value: "\(profiles.first?.height ?? 0) cals")
                 }
             }
@@ -181,8 +181,12 @@ struct HomePageView: View {
         }
     }
     
-    func calculateTodayIntake(todayMeals: [Meal]){
-        
+    func calculateTodayIntake() -> Int {
+        var sum: Int = 0
+        for meal in todayMeals {
+            sum = sum + (meal.calorie ?? 0)
+        }
+        return sum
     }
 }
 

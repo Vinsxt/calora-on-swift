@@ -22,22 +22,17 @@ struct MainTabView: View {
         
         TabView (selection: $selection) {
             Tab("Home", systemImage: "house", value: .home) {
-                NavigationStack {
-                    HomePageView()
-                }
+                HomePageView()
             }
             
             Tab("Meal Log", systemImage: "fork.knife", value: .mealLog) {
-                NavigationStack {
-                    MealLogView()
-                }
+                MealLogView()
             }
             
             
             Tab("Analytics", systemImage: "chart.bar.xaxis.ascending", value: .analytics) {
-                NavigationStack {
-                    AnalyticsPageView()
-                }
+                AnalyticsPageView()
+                
                 
             }
             .badge("!")
