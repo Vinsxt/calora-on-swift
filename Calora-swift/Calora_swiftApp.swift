@@ -10,11 +10,15 @@ import SwiftData
 
 @main
 struct Calora_swiftApp: App {
+    
+    @State private var healthKitManager = HealthKitManager()
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack{
                 WelcomePageView()
             }
+            .environment(healthKitManager)
         }
         .modelContainer(for: [
             UserProfile.self,

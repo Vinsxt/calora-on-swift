@@ -17,6 +17,7 @@ struct MainTabView: View {
     }
     
     @State private var selection: AppTabs = .home
+    @Environment(HealthKitManager.self) private var manager
     
     var body: some View {
         
@@ -32,8 +33,6 @@ struct MainTabView: View {
             
             Tab("Analytics", systemImage: "chart.bar.xaxis.ascending", value: .analytics) {
                 AnalyticsPageView()
-                
-                
             }
             .badge("!")
             
@@ -48,4 +47,5 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
+    .environment(HealthKitManager())
 }

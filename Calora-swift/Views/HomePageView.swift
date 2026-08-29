@@ -11,8 +11,11 @@ import SwiftData
 struct HomePageView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(HealthKitManager.self) private var manager
+    
     @Query private var profiles: [UserProfile]
     @Query private var meals: [Meal]
+    
     
     @State private var navigateToInsertMeal = false
     @State private var selectedMeal: Meal?
@@ -59,7 +62,7 @@ struct HomePageView: View {
                 HStack(spacing: 12){
                     
                     HomePageDailyStatusCard(title: "calories", value: "\(calculateTodayIntake()) cals")
-                    HomePageDailyStatusCard(title: "burned", value: "\(profiles.first?.height ?? 0) cals")
+                    HomePageDailyStatusCard(title: "burned", value: "\(manager.caloriesBurned) cals")
                 }
             }
             .padding(.top)
@@ -133,6 +136,11 @@ struct HomePageView: View {
             }
             .navigationDestination(item: $selectedMeal){
                 meal in EditMealView(passedMeal: meal)
+            }
+            .task {
+                await manager.requestAuthorization()
+                await manager.fetchTodayCalories()
+                manager.startObservingCalories()
             }
         
     }
@@ -264,4 +272,6 @@ struct HomePageView: View {
         return HomePageView()
             .modelContainer(container)
     }
+    .environment(HealthKitManager())
+    
 }

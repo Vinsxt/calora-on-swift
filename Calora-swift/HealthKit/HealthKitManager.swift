@@ -83,7 +83,7 @@ class HealthKitManager {
         }
         
         healthStore.execute(observerQuery)
-        healthStore.enableBackgroundDelivery(for: caloriesType, frequency: .hourly) { success, error in
+        healthStore.enableBackgroundDelivery(for: caloriesType, frequency: .immediate) { success, error in
         
             if success {
                 print("Background delivery enabled for calories")
