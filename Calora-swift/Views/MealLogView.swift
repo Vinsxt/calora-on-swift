@@ -22,6 +22,26 @@ struct MealLogView: View {
         }
     }
     
+    var rangedMeal: [Meal]{
+        
+        let calendar = Calendar.current
+        
+        let exclusiveEndDate = calendar.date(
+            byAdding: .day,
+            value: 1,
+            to: endDate
+        )
+        
+        return meals.filter { meal in
+            meal.mealTimeStamp >= startDate && meal.mealTimeStamp < exclusiveEndDate!
+        }
+    }
+    
+    @State private var startDate = Date()
+    @State private var endDate = Date()
+    
+    @State private var showDateRangePicker = false
+    
     var body: some View {
         
         ZStack{
@@ -66,7 +86,7 @@ struct MealLogView: View {
                 .padding(.bottom, 1)
                 
                 Button(action: {
-                    // code
+                    showDateRangePicker = true
                 }) {
                     Image(systemName: "calendar")
                         .foregroundStyle(.black)
@@ -77,6 +97,9 @@ struct MealLogView: View {
                 .tint(.white)
                 .padding(.bottom, 1)
                 .padding(.trailing, 30)
+                .sheet(isPresented: $showDateRangePicker){
+                    DateRangePicker(startDate: $startDate, endDate: $endDate)
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             

@@ -27,7 +27,9 @@ struct MainTabView: View {
             }
             
             Tab("Meal Log", systemImage: "fork.knife", value: .mealLog) {
-                MealLogView()
+                NavigationStack{
+                    MealLogView()
+                }
             }
             
             
