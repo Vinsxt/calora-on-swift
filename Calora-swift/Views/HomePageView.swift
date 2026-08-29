@@ -89,9 +89,7 @@ struct HomePageView: View {
                 }
                 .safeAreaPadding(.top, 10)
                 .onAppear(){
-                    if meals.isEmpty{
-                        insertTestMeals()
-                    }
+                    insertTestMeals()
                 }
                 
                 .frame(maxHeight: .infinity)

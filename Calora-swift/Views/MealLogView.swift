@@ -14,6 +14,8 @@ struct MealLogView: View {
     @Query private var profiles: [UserProfile]
     @Query private var meals: [Meal]
     
+    @State private var selectedMeal: Meal?
+    
     var groupedMeals: [Date: [Meal]] {
         Dictionary(grouping: meals){
             meal in Calendar.current.startOfDay(for: meal.mealTimeStamp)
@@ -36,7 +38,7 @@ struct MealLogView: View {
                             calories: meal.calorie ?? 0,
                             mealTimeStamp: meal.mealTimeStamp
                         ) {
-                            print("print meal")
+                            selectedMeal = meal
                         }
                         }
                     } header: {
@@ -47,9 +49,7 @@ struct MealLogView: View {
             }
             .safeAreaPadding(.top, 40)
             .onAppear(){
-                if meals.isEmpty{
-                    insertTestMeals()
-                }
+                insertTestMeals()
             }
             
             HStack(){
@@ -81,6 +81,9 @@ struct MealLogView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             
             
+        }
+        .navigationDestination(item: $selectedMeal){
+            meal in EditMealView(passedMeal: meal)
         }
         
         
@@ -126,7 +129,7 @@ struct MealLogView: View {
         for: Meal.self,
         configurations: ModelConfiguration(isStoredInMemoryOnly: true)
     )
-
+    
     let today = Date()
     let yesterday = Calendar.current.date(
         byAdding: .day,
@@ -138,7 +141,7 @@ struct MealLogView: View {
         value: -2,
         to: today
     )!
-
+    
     container.mainContext.insert(
         Meal(
             mealDescription: "Chicken breast 200g",
@@ -151,7 +154,7 @@ struct MealLogView: View {
             logTitle: "Chicken breast"
         )
     )
-
+    
     container.mainContext.insert(
         Meal(
             mealDescription: "Eggs and rice",
@@ -164,7 +167,7 @@ struct MealLogView: View {
             logTitle: "Eggs + Rice"
         )
     )
-
+    
     container.mainContext.insert(
         Meal(
             mealDescription: "Fish and vegetables",
@@ -177,7 +180,7 @@ struct MealLogView: View {
             logTitle: "Fish Dinner"
         )
     )
-
+    
     container.mainContext.insert(
         Meal(
             mealDescription: "Banana and yogurt",
@@ -190,7 +193,7 @@ struct MealLogView: View {
             logTitle: "Pre-workout Snack"
         )
     )
-
+    
     return MealLogView()
         .modelContainer(container)
 }
