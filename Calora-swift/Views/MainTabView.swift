@@ -27,9 +27,8 @@ struct MainTabView: View {
             }
             
             Tab("Meal Log", systemImage: "fork.knife", value: .mealLog) {
-                NavigationStack{
-                    MealLogView()
-                }
+                MealLogView()
+                
             }
             
             
@@ -49,5 +48,5 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
-    .environment(HealthKitManager())
+        .environment(HealthKitManager())
 }

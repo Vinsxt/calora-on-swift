@@ -16,24 +16,37 @@ struct MealLogView: View {
     
     @State private var selectedMeal: Meal?
     
-    var groupedMeals: [Date: [Meal]] {
-        Dictionary(grouping: meals){
-            meal in Calendar.current.startOfDay(for: meal.mealTimeStamp)
-        }
-    }
+    @State private var dateFilterActive = false
     
     var rangedMeal: [Meal]{
         
         let calendar = Calendar.current
         
-        let exclusiveEndDate = calendar.date(
+        guard let exclusiveEndDate = calendar.date(
             byAdding: .day,
             value: 1,
             to: endDate
-        )
+        ) else {
+            return []
+        }
         
         return meals.filter { meal in
-            meal.mealTimeStamp >= startDate && meal.mealTimeStamp < exclusiveEndDate!
+            meal.mealTimeStamp >= startDate && meal.mealTimeStamp < exclusiveEndDate
+        }
+    }
+    
+    var displayedMeals: [Meal] {
+        if dateFilterActive {
+            return rangedMeal
+        }
+        else {
+            return meals
+        }
+    }
+    
+    var groupedMeals: [Date: [Meal]] {
+        Dictionary(grouping: displayedMeals){
+            meal in Calendar.current.startOfDay(for: meal.mealTimeStamp)
         }
     }
     
@@ -44,7 +57,7 @@ struct MealLogView: View {
     
     var body: some View {
         
-        ZStack{
+        ZStack {
             
             List{
                 ForEach(groupedMeals.keys.sorted(by: >), id: \.self) {date in
@@ -67,12 +80,33 @@ struct MealLogView: View {
                 }
                 
             }
-            .safeAreaPadding(.top, 40)
+            .safeAreaPadding(.top, 60)
             .onAppear(){
                 insertTestMeals()
             }
             
             HStack(){
+                
+                if dateFilterActive{
+                    Button(action: {
+                        dateFilterActive = false
+                    }) {
+                        Image(systemName: "xmark.circle")
+                            .foregroundStyle(.white)
+                            .font(.title)
+                            .frame(width: 27, height: 36)
+                            
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(.red)
+                    .padding(.bottom, 1)
+                    .padding(.leading, 30)
+                }
+                
+                
+                
+                Spacer()
+                
                 Button(action: {
                     // code
                 }) {
@@ -99,6 +133,9 @@ struct MealLogView: View {
                 .padding(.trailing, 30)
                 .sheet(isPresented: $showDateRangePicker){
                     DateRangePicker(startDate: $startDate, endDate: $endDate)
+                        .onDisappear {
+                            dateFilterActive = true
+                        }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
